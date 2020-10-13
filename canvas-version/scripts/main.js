@@ -38,8 +38,8 @@ function init() {
 
     // creating snake
     food = {
-        x: 0,
-        y: 0,
+        x: ran(0, column - 1),
+        y: ran(0, row - 1),
         color: "#ff1c4a"
     }
     //drawing function
