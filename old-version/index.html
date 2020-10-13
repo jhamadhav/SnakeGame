@@ -1,0 +1,85 @@
+<!--
+     Name : 🐍Snake [ 🎮 Game ]
+     Author : Madhav Jha
+     version : 1.3.0
+     
+     Loader : Snake loader (i.e previously made by the same author)
+     
+     
+NOTE : Inform me / Ask permission before  using  it.
+      DO NOT COPY , PLEASE !!!
+      
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 ">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+
+    <link href="https://fonts.googleapis.com/css?family=Sarabun|Aleo" rel="stylesheet">
+    <link rel='stylesheet' href='./style.css' />
+    <script src='./script.js'></script>
+    <title>🐍Snake [ 🎮 Game ]</title>
+</head>
+
+<body>
+    <!-- Loader starts -->
+    <div id="container">
+        <div id="loader">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <!-- Loader ends -->
+
+
+    <div id="instruction">
+        <h2>INSTRUCTIONS</h2>
+        <img id="swipe" src="https://dl.dropbox.com/s/ky6y15fl6rx6zo5/SwipeGesture.png?dl=0" alt="swipe instruction" />
+        <h3>Swipe or use arrow keys to control the snake.<br>Click on <i class='fas fa-volume-off'></i> to play music .
+        </h3>
+        <button id="pStart" onclick="game()">START</button>
+    </div>
+    <button id="playAgain" onclick="playAgain()">Play Again</button>
+
+    <div class="container">
+
+        <div id="board">Score : <div id="score">0</div>
+        </div>
+
+        <div id="playSound">
+            <i id='sound' onclick="noPlaySound()" class='fas fa-volume-up'></i>
+            <i id="nosound" onclick="playSound()" class="fas fa-volume-off"></i>
+        </div>
+        <canvas id="canvas"></canvas>
+
+        <footer>Made with <span>&#9829;</span> By Madhav <sup> ©</sup>2019 - &infin;</footer>
+    </div>
+
+    <img id="food" src="https://dl.dropbox.com/s/jka79nx4tj9z7st/food-28x28.png?dl=0" alt="food" />
+
+
+    <!--  To get the clicking sound -->
+    <audio id="music" autoplay loop>
+        <source src="https://dl-web.dropbox.com/s/k64a811vpo8f1mz/Snake%20game%20theme%20song%201.mp3?dl=0"
+            type="audio/mp3">
+
+    </audio>
+
+    <audio id="eat" autoplay>
+        <source src="https://dl-web.dropbox.com/s/kxe1gf2rt232jg2/eat.mp3?dl=0" type="audio/mp3">
+
+    </audio>
+    <audio id="lose" autoplay>
+        <source src="https://dl-web.dropbox.com/s/b618j1vdd4d0fer/dead.mp3?dl=0" type="audio/mp3">
+
+    </audio>
+</body>
+
+</html>
