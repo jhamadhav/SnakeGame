@@ -1,4 +1,3 @@
-const snakeBodySize = 40;
 class Snake {
     constructor() {
         this.velocityX = 1;
@@ -7,44 +6,38 @@ class Snake {
         let head = {
             x: 0,
             y: 0,
-            bodyType: "head",
-            color: "#fff"
         }
         this.tail.push(head);
     }
 
     update = () => {
         let currentHead = this.tail[0];
-        let newHead;
+        let newHead = {
+            x: 0,
+            y: 0,
+        };
+
         if (currentHead.x == food.x && currentHead.y == food.y) {
-            newHead = {
-                x: food.x * snakeBodySize,
-                y: food.y * snakeBodySize,
-                bodyType: "head",
-                color: "#fff"
-            }
-            food = {
-                x: ran(0, column - 1),
-                y: ran(0, row - 1),
-                color: "#ff1c4a"
-            }
-            this.tail.push(newHead)
+            score++;
+            scoreDom.innerText = "Score :  " + score;
+            makeFood();
         } else {
             newHead = this.tail.pop();
-            newHead.x += this.velocityX * snakeBodySize;
-            newHead.y += this.velocityY * snakeBodySize;
         }
-        if (newHead.x >= W) {
+        newHead.x = currentHead.x + this.velocityX * snakeBodySize;
+        newHead.y = currentHead.y + this.velocityY * snakeBodySize;
+
+        if (newHead.x >= column * snakeBodySize) {
             newHead.x = 0;
         } else if (newHead.x < 0) {
-            newHead.x = W - snakeBodySize;
+            newHead.x = (column - 1) * snakeBodySize;
         }
-        if (newHead.y >= H) {
+        if (newHead.y >= row * snakeBodySize) {
             newHead.y = 0;
         } else if (newHead.y < 0) {
-            newHead.y = H - snakeBodySize;
+            newHead.y = (row - 1) * snakeBodySize;
         }
-        this.tail.push(newHead);
+        this.tail.unshift(newHead);
     }
 
     changeVelocity = (value) => {
@@ -64,13 +57,22 @@ class Snake {
             this.velocityY = 1;
         }
     }
+
+    collision = () => {
+        for (let i = 1; i < this.tail.length; i++) {
+            let head = this.tail[0];
+            if (head.x == this.tail[i].x && head.y == this.tail[i].y) {
+                return true;
+            }
+        }
+    }
 }
 
-const drawRect = (obj) => {
+const drawRect = (obj, color = "#fff") => {
     ctx.beginPath();
     ctx.lineWidth = "1";
     ctx.strokeStyle = "#262626";
-    ctx.fillStyle = obj.color;
+    ctx.fillStyle = color;
     ctx.rect(obj.x, obj.y, snakeBodySize, snakeBodySize);
     ctx.fill();
     ctx.stroke();
@@ -78,5 +80,5 @@ const drawRect = (obj) => {
 }
 
 const ran = (min = 0, max = 1) => {
-    return Math.random() * (max - min) + min;
+    return Math.floor(Math.random() * (max - min) + min);
 }

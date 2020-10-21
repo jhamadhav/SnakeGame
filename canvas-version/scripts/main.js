@@ -1,5 +1,6 @@
-var canvas, ctx, W, H, column, row, fps = 5;
-var snake, food, dir = "RIGHT";
+let canvas, ctx, W, H, column, row, fps = 6, run;
+let snake, food, dir = "RIGHT", score, scoreDom;
+let snakeBodySize = 35, snakeHeadColor = "lightgreen";
 
 //event listeners for onload & resize
 window.addEventListener('resize', init);
@@ -31,19 +32,17 @@ function init() {
     H = canvas.height = window.innerHeight;
     column = Math.floor(W / snakeBodySize);
     row = Math.floor(H / snakeBodySize);
+    scoreDom = document.getElementById("score");
+    score = 0;
 
     // creating snake
     snake = new Snake();
-    console.log(snake.velocityY)
 
-    // creating snake
-    food = {
-        x: ran(0, column - 1),
-        y: ran(0, row - 1),
-        color: "#ff1c4a"
-    }
+    // creating snake food
+    makeFood();
+
     //drawing function
-    setInterval(draw, 1000 / fps);
+    run = setInterval(draw, 1000 / fps);
 }
 
 function draw() {
@@ -51,11 +50,40 @@ function draw() {
     ctx.fillStyle = '#333333';
     ctx.fillRect(0, 0, W, H);
 
+    // grid
+    // for (let i = 0; i < column; i++) {
+    //     for (let j = 0; j < row; j++) {
+    //         let obj = {
+    //             x: i * snakeBodySize,
+    //             y: j * snakeBodySize,
+    //         }
+    //         drawRect(obj, "#333");
+    //     }
+
+    // }
+
     // snake animation
     snake.update();
-    for (let i = 0; i < snake.tail.length; i++) {
-        drawRect(snake.tail[i]);
+    if (snake.collision()) {
+        clearInterval(run);
     }
-    drawRect(food);
-    // requestAnimationFrame(draw);
+    drawRect(food, "#ff1c4a");
+    for (let i = 0; i < snake.tail.length; i++) {
+        if (i == 0) {
+            drawRect(snake.tail[i], snakeHeadColor);
+        } else {
+            drawRect(snake.tail[i]);
+        }
+
+    }
+
+    //  requestAnimationFrame(draw);
+}
+
+
+const makeFood = () => {
+    food = {
+        x: ran(0, column - 1) * snakeBodySize,
+        y: ran(0, row - 1) * snakeBodySize,
+    }
 }
